@@ -42,6 +42,8 @@ $ npm run db:dev:up
 $ npm run db:dev:restart
 ```
 
+## Start server
+
 ```bash
 # development
 $ npm run start
