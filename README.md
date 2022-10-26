@@ -32,14 +32,22 @@
 $ npm install
 ```
 
-## Running the app
+## Dev db
+
+```bash
+# start dev db
+$ npm run db:dev:up
+
+# reset dev db
+$ npm run db:dev:restart
+```
 
 ```bash
 # development
 $ npm run start
 
 # watch mode
-$ npm run start:dev
+$ npm run dev
 
 # production mode
 $ npm run start:prod
@@ -56,6 +64,18 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Prisma Studio
+
+```bash
+$ npx prisma studio
+```
+
+## Prisam dev migrate
+
+```bash
+$ npx prisma migrate dev
 ```
 
 ## Support
