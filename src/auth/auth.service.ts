@@ -1,16 +1,14 @@
 import {
-  Body,
-  Injectable,
   ForbiddenException,
-  HttpCode,
-  HttpStatus,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
-import * as argon from 'argon2';
-import { Prisma } from '@prisma/client';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { AuthDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
+import { Prisma } from '@prisma/client';
+import * as argon from 'argon2';
 import { PrismaService } from '../prisma/prisma.service';
+import { AuthDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -30,9 +28,7 @@ export class AuthService {
         },
       });
 
-      delete user.hash;
-
-      return user;
+      return this.signToken(user.id, user.email);
     } catch (error) {
       if (
         error instanceof
@@ -48,7 +44,6 @@ export class AuthService {
     }
   }
 
-  @HttpCode(HttpStatus.OK)
   async signin(dto: AuthDto) {
     const user =
       await this.prisma.user.findUnique({
@@ -57,7 +52,7 @@ export class AuthService {
         },
       });
     if (!user) {
-      throw new ForbiddenException(
+      throw new UnauthorizedException(
         'Credentials incorrect',
       );
     }
@@ -67,7 +62,7 @@ export class AuthService {
     );
 
     if (!pwMatches) {
-      throw new ForbiddenException(
+      throw new UnauthorizedException(
         'Credentials incorrect',
       );
     }
