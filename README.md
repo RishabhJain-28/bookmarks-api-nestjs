@@ -29,43 +29,43 @@
 ## Installation
 
 ```bash
-$ npm install
+$ yarn install
 ```
 
 ## Dev db
 
 ```bash
 # start dev db
-$ npm run db:dev:up
+$ yarn db:dev:up
 
 # reset dev db
-$ npm run db:dev:restart
+$ yarn db:dev:restart
 ```
 
 ## Start server
 
 ```bash
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run dev
+$ yarn dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn test:cov
 ```
 
 ## Prisma Studio
