@@ -6,7 +6,7 @@ import * as pactum from 'pactum';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
-import { AuthDto } from '../src/auth/dto';
+import { AuthDto, EditUserDto } from '../src/dto';
 describe('App e2d ', () => {
   let app: INestApplication;
   let prisma: PrismaService;
@@ -17,7 +17,9 @@ describe('App e2d ', () => {
         imports: [AppModule],
       }).compile();
     app = moduleRef.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(
+      new ValidationPipe({ whitelist: true }),
+    );
 
     const TEST_PORT = 8000;
     await app.init();
@@ -99,7 +101,25 @@ describe('App e2d ', () => {
         // .inspect();
       });
     });
-    describe('Edit User', () => {});
+    describe('Edit User', () => {
+      it('should edit user', () => {
+        const dto: EditUserDto = {
+          email: 'test@gmail.com',
+          firstname: 'test',
+        };
+
+        return pactum
+          .spec()
+          .patch('/users')
+          .withBody(dto)
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBodyContains(dto.firstname)
+          .expectBodyContains(dto.email);
+      });
+    });
   });
 
   describe('Bookmark', () => {

@@ -19,8 +19,8 @@ model User {
   email String @unique
   hash String
 
-  firstName String? 
-  lastName String?
+  firstname String? 
+  lastname String?
 
   bookmarks Bookmark[]
 
